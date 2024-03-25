@@ -1,5 +1,6 @@
 package com.example.jobapp.job;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,16 +11,17 @@ import java.util.List;
 
 @RestController
 public class JobController {
-    private final List<Job> jobs = new ArrayList<>();
+    @Autowired
+    private JobService jobService;
 
     @GetMapping(path = "/jobs")
     public List<Job> getAll(){
-        return jobs;
+        return jobService.findAllJobs();
     }
 
     @PostMapping(path = "/jobs")
-    public String saveJob(@RequestBody Job job){
-        jobs.add(job);
-        return "OK";
+    public String createJob(@RequestBody Job job){
+        jobService.createJob(job);
+        return "Job added successfully";
     }
 }
