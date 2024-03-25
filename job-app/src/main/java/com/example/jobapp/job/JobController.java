@@ -33,6 +33,8 @@ public class JobController {
 
     @DeleteMapping(path = "jobs/delete/{jobId}")
     public ResponseEntity<Job> deleteJobById(@PathVariable(name = "jobId") int jobId){
-        return new ResponseEntity<>(jobService.deleteJobById(jobId), HttpStatus.NO_CONTENT);
+        Job job = jobService.deleteJobById(jobId);
+        return job.getJobId() != -1 ? new ResponseEntity<>(jobService.deleteJobById(jobId), HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(job, HttpStatus.NOT_FOUND);
     }
 }
