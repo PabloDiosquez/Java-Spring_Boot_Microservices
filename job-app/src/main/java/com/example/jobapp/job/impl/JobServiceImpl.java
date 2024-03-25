@@ -34,7 +34,6 @@ public class JobServiceImpl implements JobService {
         );
     }
 
-
     public void createJob(Job job){
         assert job != null;
         job.setJobId(nextId++);
