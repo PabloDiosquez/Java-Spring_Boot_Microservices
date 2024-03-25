@@ -1,11 +1,7 @@
 package com.example.jobapp.job;
 
-import com.example.jobapp.job.impl.JobServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,6 +9,12 @@ import java.util.List;
 public class JobController {
     @Autowired
     private JobService jobService;
+
+    @GetMapping(path = "/jobs/{jobId}")
+    public Job getJobById(@PathVariable(name = "jobId") int jobId){
+        Job job = jobService.getJobById(jobId);
+        return job != null ? job : new Job();
+    }
 
     @GetMapping(path = "/jobs")
     public List<Job> getAll(){

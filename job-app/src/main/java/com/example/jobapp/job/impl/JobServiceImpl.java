@@ -16,6 +16,25 @@ public class JobServiceImpl implements JobService {
         return jobs;
     }
 
+    @Override
+    public Job getJobById(int jobId) {
+        Job jobFound = null;
+        for (Job job: jobs) {
+            if(job.getJobId() == jobId){
+                jobFound = job;
+            }
+        }
+        return jobFound != null ? jobFound : new Job(
+                -1,
+                "Error",
+                "Error",
+                -1,
+                -1,
+                "Error"
+        );
+    }
+
+
     public void createJob(Job job){
         assert job != null;
         job.setJobId(nextId++);
