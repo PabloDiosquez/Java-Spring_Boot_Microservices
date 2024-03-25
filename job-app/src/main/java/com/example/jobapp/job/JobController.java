@@ -22,12 +22,17 @@ public class JobController {
 
     @GetMapping(path = "/jobs")
     public ResponseEntity<List<Job>> getAll(){
-        return new ResponseEntity<>(jobService.findAllJobs(), HttpStatus.OK);
+        return ResponseEntity.ok(jobService.findAllJobs());
     }
 
     @PostMapping(path = "/jobs")
-    public ResponseEntity<HttpStatus> createJob(@RequestBody Job job){
+    public ResponseEntity<String> createJob(@RequestBody Job job){
         jobService.createJob(job);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Job added successfully", HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "jobs/delete/{jobId}")
+    public ResponseEntity<Job> deleteJobById(@PathVariable(name = "jobId") int jobId){
+        return new ResponseEntity<>(jobService.deleteJobById(jobId), HttpStatus.NO_CONTENT);
     }
 }

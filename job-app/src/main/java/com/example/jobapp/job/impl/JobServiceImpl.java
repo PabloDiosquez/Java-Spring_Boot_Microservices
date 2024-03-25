@@ -40,4 +40,9 @@ public class JobServiceImpl implements JobService {
         jobs.add(job);
     }
 
+    @Override
+    public Job deleteJobById(int jobId) {
+        return jobs.remove(jobs.indexOf(getJobById(jobId)));
+    }
+
 }
