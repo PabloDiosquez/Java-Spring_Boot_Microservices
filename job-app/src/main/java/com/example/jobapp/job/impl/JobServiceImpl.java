@@ -12,7 +12,7 @@ public class JobServiceImpl implements JobService {
     private final List<Job> jobs = new ArrayList<>();
     private int nextId = 1;
 
-    private final Job jobNOT_FOUND = new Job(
+    private final Job NOT_FOUND = new Job(
             -1,
             "Error",
             "Error",
@@ -33,7 +33,7 @@ public class JobServiceImpl implements JobService {
                 jobFound = job;
             }
         }
-        return jobFound != null ? jobFound : jobNOT_FOUND;
+        return jobFound != null ? jobFound : NOT_FOUND;
     }
 
     public void createJob(Job job){
@@ -45,7 +45,18 @@ public class JobServiceImpl implements JobService {
     @Override
     public Job deleteJobById(int jobId) {
         int index = jobs.indexOf(getJobById(jobId));
-        return index != -1 ? jobs.remove(index) : jobNOT_FOUND;
+        return index != -1 ? jobs.remove(index) : NOT_FOUND;
+    }
+
+    @Override
+    public boolean updateJob(int jobId, Job job) {
+        int index = jobs.indexOf(getJobById(jobId));
+        if(index != -1){
+            job.setJobId(jobId);
+            jobs.set(index, job);
+            return true;
+        }
+        return false;
     }
 
 }

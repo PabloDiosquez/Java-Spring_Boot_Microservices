@@ -2,7 +2,6 @@ package com.example.jobapp.job;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,10 +30,16 @@ public class JobController {
         return new ResponseEntity<>("Job added successfully", HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "jobs/delete/{jobId}")
-    public ResponseEntity<Job> deleteJobById(@PathVariable(name = "jobId") int jobId){
+    @DeleteMapping(path = "/jobs/{jobId}")
+    public ResponseEntity<String> deleteJobById(@PathVariable(name = "jobId") int jobId){
         Job job = jobService.deleteJobById(jobId);
-        return job.getJobId() != -1 ? new ResponseEntity<>(jobService.deleteJobById(jobId), HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(job, HttpStatus.NOT_FOUND);
+        return job.getJobId() != -1 ? new ResponseEntity<>("Job deleted successfully", HttpStatus.OK)
+                : new ResponseEntity<>("Job NOT Found", HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping(path = "/jobs/{jobId}")
+    public ResponseEntity<String> updateJob(@PathVariable(name = "jobId") int jobId, @RequestBody Job updatedJob){
+        return jobService.updateJob(jobId, updatedJob) ? new ResponseEntity<>("Jod updated successfully", HttpStatus.OK)
+                : new ResponseEntity<>("Job NOT Found", HttpStatus.NOT_FOUND);
     }
 }
