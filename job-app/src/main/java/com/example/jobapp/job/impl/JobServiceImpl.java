@@ -1,7 +1,9 @@
 package com.example.jobapp.job.impl;
 
 import com.example.jobapp.job.Job;
+import com.example.jobapp.job.JobRepository;
 import com.example.jobapp.job.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,9 +11,9 @@ import java.util.List;
 
 @Service
 public class JobServiceImpl implements JobService {
+    @Autowired
+    private JobRepository jobRepository;
     private final List<Job> jobs = new ArrayList<>();
-    private int nextId = 1;
-
     private final Job NOT_FOUND = new Job(
             -1,
             "Error",
@@ -22,38 +24,31 @@ public class JobServiceImpl implements JobService {
     );
 
     public List<Job> findAllJobs(){
-        return jobs;
+        return jobRepository.findAll();
     }
 
     @Override
     public Job getJobById(int jobId) {
-        Job jobFound = null;
-        for (Job job: jobs) {
-            if(job.getJobId() == jobId){
-                jobFound = job;
-            }
-        }
-        return jobFound != null ? jobFound : NOT_FOUND;
+        return jobRepository.findById(jobId).orElse(NOT_FOUND);
     }
 
     public void createJob(Job job){
         assert job != null;
-        job.setJobId(nextId++);
-        jobs.add(job);
+        jobRepository.save(job);
     }
 
     @Override
     public Job deleteJobById(int jobId) {
-        int index = jobs.indexOf(getJobById(jobId));
-        return index != -1 ? jobs.remove(index) : NOT_FOUND;
+        Job deletedJob = getJobById(jobId);
+        jobRepository.deleteById(jobId);
+        return deletedJob;
     }
 
     @Override
     public boolean updateJob(int jobId, Job job) {
-        int index = jobs.indexOf(getJobById(jobId));
-        if(index != -1){
-            job.setJobId(jobId);
-            jobs.set(index, job);
+        Job oldJob = getJobById(jobId);
+        if(oldJob.getJobId() != -1){
+            jobRepository.save(job);
             return true;
         }
         return false;
