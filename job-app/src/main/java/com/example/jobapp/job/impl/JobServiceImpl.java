@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobServiceImpl implements JobService {
     @Autowired
     private JobRepository jobRepository;
-    private final List<Job> jobs = new ArrayList<>();
     private final Job NOT_FOUND = new Job(
             -1,
             "Error",
@@ -46,8 +46,8 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public boolean updateJob(int jobId, Job job) {
-        Job oldJob = getJobById(jobId);
-        if(oldJob.getJobId() != -1){
+        Optional<Job> optionalJob = jobRepository.findById(jobId);
+        if(optionalJob.isPresent()){
             jobRepository.save(job);
             return true;
         }
