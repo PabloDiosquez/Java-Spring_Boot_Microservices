@@ -45,10 +45,11 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public boolean updateJob(int jobId, Job job) {
+    public boolean updateJob(int jobId, Job updatedJob) {
         Optional<Job> optionalJob = jobRepository.findById(jobId);
         if(optionalJob.isPresent()){
-            jobRepository.save(job);
+            updatedJob.setJobId(jobId);
+            jobRepository.save(updatedJob);
             return true;
         }
         return false;
