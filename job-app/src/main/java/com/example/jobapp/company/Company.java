@@ -20,8 +20,8 @@ public class Company {
     private int companyId;
     private String name;
     private String description;
-    @OneToMany
+    @OneToMany(mappedBy = "company")
     private List<Job> jobs;
-    @OneToMany
+    @OneToMany(mappedBy = "company")
     private List<Review> reviews;
 }

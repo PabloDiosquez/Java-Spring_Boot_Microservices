@@ -27,9 +27,9 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createCompany(@RequestBody Company company){
+    public ResponseEntity<String> addCompany(@RequestBody Company company){
         try {
-            companyService.createCompany(company);
+            companyService.addCompany(company);
             return new ResponseEntity<>("Company added successfully", HttpStatus.OK);
         } catch (AssertionError ex){
             return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);

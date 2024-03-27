@@ -25,7 +25,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void createCompany(Company company) {
+    public void addCompany(Company company) {
         assert company != null;
         companyRepository.save(company);
     }

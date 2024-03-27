@@ -7,7 +7,7 @@ public interface CompanyService {
 
     Company getCompanyById(int companyId);
 
-    void createCompany(Company company);
+    void addCompany(Company company);
 
     Company updateCompany(int companyId, Company updatedCompany);
 
