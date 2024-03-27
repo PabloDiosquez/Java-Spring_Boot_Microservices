@@ -15,7 +15,7 @@ public class CompanyController {
 
     @GetMapping
     public ResponseEntity<List<Company>> getAll(){
-        return new ResponseEntity<>(companyService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{companyId}")

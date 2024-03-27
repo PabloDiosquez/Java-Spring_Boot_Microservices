@@ -3,7 +3,7 @@ package com.example.jobapp.company;
 import java.util.List;
 
 public interface CompanyService {
-    List<Company> getAll();
+    List<Company> getAllCompanies();
 
     Company getCompanyById(int companyId);
 
