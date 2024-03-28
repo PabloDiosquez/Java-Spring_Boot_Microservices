@@ -14,22 +14,13 @@ import java.util.Optional;
 public class JobServiceImpl implements JobService {
     @Autowired
     private JobRepository jobRepository;
-    private final Job NOT_FOUND = new Job(
-            -1,
-            "Error",
-            "Error",
-            -1,
-            -1,
-            "Error"
-    );
-
     public List<Job> findAllJobs(){
         return jobRepository.findAll();
     }
 
     @Override
     public Job getJobById(int jobId) {
-        return jobRepository.findById(jobId).orElse(NOT_FOUND);
+        return jobRepository.findById(jobId).orElse(null);
     }
 
     public void createJob(Job job){

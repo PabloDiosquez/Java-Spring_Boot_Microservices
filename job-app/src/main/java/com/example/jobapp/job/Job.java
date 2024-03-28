@@ -24,4 +24,5 @@ public class Job {
     @ManyToOne
     private Company company;
 
+
 }
